@@ -1,0 +1,72 @@
+.sidebar-header {
+    background-color: #BD9DEA;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.burger-menu {
+    cursor: pointer;
+}
+
+.icon {
+    color: white;
+    font-size: 40px;
+}
+
+.app-name {
+    font-size: 30px;
+    color: white;
+    margin-left: 20px;
+    font-style: italic;
+    text-decoration: none;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #f6f1fc;
+    transition: transform 0.3s ease;
+    transform: translateX(-100%);
+    position: absolute;
+    top: 65px;
+    left: 0;
+    height: 100vh;
+    border: 2px solid #BD9DEA;
+    border-top: none;
+    border-left: none;
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li {
+    padding: 10px 20px;
+    transition: all 0.2s ease;
+    border-bottom: 2px solid transparent;
+}
+
+.sidebar li:hover {
+    background-color: #BD9DEA;
+
+}
+
+.sidebar li:hover a {
+    color: white;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #BD9DEA;
+}
+
+.sidebar-open .main-content {
+    margin-left: 270px;
+}
