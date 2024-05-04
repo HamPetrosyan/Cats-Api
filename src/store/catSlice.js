@@ -18,15 +18,14 @@ export const fetchCategories = createAsyncThunk(
 
 export const fetchCats = createAsyncThunk(
   "cats/fetchCats",
-  async (categoryId, { rejectWithValue, dispatch }) => {
+  async ({ categoryId, page }, { rejectWithValue, dispatch }) => {
     try {
       const url = categoryId
-        ? `https://api.thecatapi.com/v1/images/search?limit=9&category_ids=${categoryId}`
-        : "https://api.thecatapi.com/v1/images/search?limit=9";
+        ? `https://api.thecatapi.com/v1/images/search?api_key=live_QBbnYiIoLzY1jQzdxshSiowclOWOrp51GI3RhWZveh29ASM8IvVj0tbcb6LgJFhK&limit=9&page=${page}&category_ids=${categoryId}`
+        : `https://api.thecatapi.com/v1/images/search?api_key=live_QBbnYiIoLzY1jQzdxshSiowclOWOrp51GI3RhWZveh29ASM8IvVj0tbcb6LgJFhK&limit=9&page=${page}`;
       const response = await axios.get(url);
 
-      console.log(response.data);
-      dispatch(setCats(response.data));
+      dispatch(addCats(response.data));
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -41,6 +40,7 @@ const catSlice = createSlice({
     selectedCategory: null,
     status: null,
     error: null,
+    currentPage: 1,
   },
   reducers: {
     setCats(state, action) {
@@ -48,6 +48,12 @@ const catSlice = createSlice({
     },
     setCategories(state, action) {
       state.categories = action.payload;
+    },
+    addCats(state, action) {
+      state.catImages = [...state.catImages, ...action.payload];
+    },
+    nextPage(state) {
+      state.currentPage += 1;
     },
   },
   extraReducers: (builder) => {
@@ -77,5 +83,5 @@ const catSlice = createSlice({
   },
 });
 
-export const { setCats, setCategories } = catSlice.actions;
+export const { setCats, setCategories, addCats, nextPage } = catSlice.actions;
 export default catSlice.reducer;

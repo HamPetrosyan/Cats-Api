@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 
-import { fetchCategories, fetchCats } from "../store/catSlice";
+import { fetchCategories, fetchCats, setCats } from "../store/catSlice";
 import "../style/sidebar.css";
 
 const Sidebar = () => {
@@ -19,7 +19,12 @@ const Sidebar = () => {
 
   useEffect(() => {
     dispatch(fetchCategories());
-  }, []);
+  }, [dispatch]);
+
+  const handleCategoryClick = async (categoryId) => {
+    dispatch(setCats([]));
+    dispatch(fetchCats({ categoryId, page: 1 }));
+  };
 
   return (
     <>
@@ -35,7 +40,7 @@ const Sidebar = () => {
             <li key={category.id}>
               <Link
                 to={`/category/${category.id}`}
-                onClick={() => dispatch(fetchCats(category.id))}
+                onClick={() => handleCategoryClick(category.id)}
               >
                 {category.name}
               </Link>
